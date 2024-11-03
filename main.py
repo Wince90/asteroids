@@ -29,6 +29,12 @@ def main():
         for event in py.event.get():
             if event.type == py.QUIT:
                 return
+
+        for obj in asteroids:
+            if obj.collision(player):
+                print("Game Over!")
+                py.quit() 
+        
         for obj in updatable:
             obj.update(dt)
         screen.fill(background_color)

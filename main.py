@@ -10,15 +10,25 @@ def main():
     time = py.time.Clock()
     dt = 0
     is_on = True
+
+    updatable = py.sprite.Group()
+    drawable = py.sprite.Group()
+
+    Player.containers = (updatable, drawable)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 20)
+    
 
     while is_on:
         for event in py.event.get():
             if event.type == py.QUIT:
                 return
-        player.update(dt)
+        for obj in updatable:
+            obj.update(dt)
         screen.fill(background_color)
-        player.draw(screen)
+        
+        for obj in drawable:
+            obj.draw(dt)
+
         py.display.flip()
         dt = time.tick(60) / 1000
         

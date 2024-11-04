@@ -3,6 +3,7 @@ from constants import *
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from shot import Shoot
 
 screen = py.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 background_color = ("black")
@@ -16,12 +17,14 @@ def main():
     updatable = py.sprite.Group()
     drawable = py.sprite.Group()
     asteroids = py.sprite.Group()
+    shoots = py.sprite.Group()
 
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = updatable
     asteroid_field = AsteroidField()
 
-    Player.containers = (updatable, drawable)
+    Shoot.containers = (drawable, shoots, updatable)
+    Player.containers = (updatable, drawable, shoots)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 20)
     
 
@@ -33,7 +36,7 @@ def main():
         for obj in asteroids:
             if obj.collision(player):
                 print("Game Over!")
-                py.quit() 
+                #py.quit() 
         
         for obj in updatable:
             obj.update(dt)
